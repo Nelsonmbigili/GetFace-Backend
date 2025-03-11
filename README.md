@@ -1,2 +1,2 @@
-# GetFace - v1
+# GetFace
  
