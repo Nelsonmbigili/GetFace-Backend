@@ -7,10 +7,8 @@ const knex = require('knex');
 const db = knex({
   client: 'pg',
   connection: {
-    host : '127.0.0.1',
-    user : 'nelsonmbigili',
-    password : 'Nmsonbili',
-    database : 'GetFace'
+    connectionString: process.env.DATABASE_URL,
+    ssl: {rejectUnauthorized:false},
   }
 });
 
@@ -97,6 +95,6 @@ app.put('/image', (req, res) => {
   .catch(err => res.status(400).json('unable to get entries'))
 })
 
-app.listen(process.env.PORT, ()=> {
+app.listen(process.env.PORT || 3000, ()=> {
   console.log(`app is running on port ${process.env.PORT}`);
 })
