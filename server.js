@@ -1,8 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser'); 
-const bcrypt = require('bcrypt-nodejs');
-const cors = require('cors');
-const knex = require('knex');
+import express from 'express';
+import bodyParser from'body-parser'; 
+import bcrypt from'bcrypt-nodejs';
+import cors from'cors';
+import knex from'knex';
+import fetch from'node-fetch'; 
 
 const db = knex({
   client: 'pg',
@@ -95,6 +96,49 @@ app.put('/image', (req, res) => {
   .catch(err => res.status(400).json('unable to get entries'))
 })
 
+
+app.post('/face-detect', (req, res) => {
+  const { imageUrl } = req.body;
+  
+  const PAT = '4390cb4e28d948048cff29fce4144434';
+  const USER_ID = 'mbigilinelsonclarify';       
+  const APP_ID = 'GetFace';
+  const apiUrl = 'https://api.clarifai.com/v2/models/face-detection/versions/6dc7e46bc9124c5c8824be4822abe105/outputs';
+
+  const raw = JSON.stringify({
+    "user_app_id": {
+      "user_id": USER_ID,
+      "app_id": APP_ID
+    },
+    "inputs": [
+      {
+        "data": {
+          "image": {
+            "url": imageUrl
+          }
+        }
+      }
+    ]
+  });
+
+  fetch(apiUrl, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Key ' + PAT
+    },
+    body: raw
+  })
+  .then(response => response.json())
+  .then(data => res.json(data))
+  .catch(err => res.status(400).json('Unable to work with API'));
+});
+
+
 app.listen(process.env.PORT || 3000, ()=> {
   console.log(`app is running on port ${process.env.PORT}`);
 })
+
+
+
+
