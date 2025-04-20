@@ -3,6 +3,8 @@
 ## Overview
 **[GetFace](https://getface-frontend.onrender.com/)** is a simple web application I created as a learning project for React and full-stack development.
 
+<img src="https://i.postimg.cc/mDjzFCYh/GetFace.jpg" alt="GetFace App Preview" width="600"/>
+
 The app uses the Face detection model from [Clarifai](https://clarifai.com/clarifai/main/models/face-detection) API to detect faces in images via URL input.
 
 See the Frontend on this [repository](https://github.com/Nelsonmbigili/GetFace-Frontend)
